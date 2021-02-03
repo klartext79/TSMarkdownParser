@@ -33,49 +33,35 @@ typedef NSFont UIFont;
     if (!self)
         return nil;
     
-#if TARGET_OS_TV
-    NSUInteger defaultSize = 29;
-#else
-    NSUInteger defaultSize = 12;
-#endif
+    NSUInteger defaultSize = 13;
+    NSString* defaultFont = @"ProximaNova-Regular";
+    NSString* defaultFontBold = @"ProximaNova-Bold";
     
-    self.defaultAttributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:defaultSize] };
+    self.defaultAttributes = @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:defaultSize]};
     
-#if TARGET_OS_TV
-    _headerAttributes = @[ @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:76] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:57] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:48] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:40] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:36] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:32] } ];
-#else
-    _headerAttributes = @[ @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:23] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:21] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:19] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:17] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:15] },
-                           @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:13] } ];
-#endif
+    self.headerAttributes = @[ @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:76] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:57] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:48] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:40] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:36] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:32] } ];
+
     
-#if TARGET_OS_IPHONE
-    _emphasisAttributes = @{ NSFontAttributeName: [UIFont italicSystemFontOfSize:defaultSize] };
-#else
-    _emphasisAttributes = @{ NSFontAttributeName: [[NSFontManager sharedFontManager] convertFont:[UIFont systemFontOfSize:defaultSize] toHaveTrait:NSItalicFontMask] };
-#endif
+    self.emphasisAttributes = @{ NSFontAttributeName: [[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:defaultFont size:defaultSize] toHaveTrait:NSItalicFontMask] };
     
-    _listAttributes = @[];
+    self.listAttributes = @[];
     // #69: avoiding crash if font is missing
-    _quoteAttributes = @[@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Italic" size:defaultSize] ?: [_emphasisAttributes objectForKey:NSFontAttributeName]}];
+    self.quoteAttributes = @[@{NSFontAttributeName: [NSFont fontWithName:defaultFont size:defaultSize]}];
     
-    _imageAttributes = @{};
-    _linkAttributes = @{ NSForegroundColorAttributeName: [UIColor blueColor],
-                         NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle) };
+    self.imageAttributes = @{};
+    self.linkAttributes = @{ NSForegroundColorAttributeName: [NSColor colorNamed:@"color_red"],
+                                      NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle) };
     
     // Courier New and Courier are the only monospace fonts compatible with watchOS 2
     // #69: avoiding crash if font is missing
-    _monospaceAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Courier New" size:defaultSize] ?: [UIFont fontWithName:@"Courier" size:defaultSize] ?: [UIFont systemFontOfSize:defaultSize],
-                              NSForegroundColorAttributeName: [UIColor colorWithSRGBRed:0.95 green:0.54 blue:0.55 alpha:1] };
-    _strongAttributes = @{ NSFontAttributeName: [UIFont boldSystemFontOfSize:defaultSize] };
+    self.monospaceAttributes = @{ NSFontAttributeName: [NSFont fontWithName:@"Courier New" size:defaultSize] ?: [NSFont fontWithName:@"Courier" size:defaultSize] ?: [NSFont systemFontOfSize:defaultSize],
+                              NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.95 green:0.54 blue:0.55 alpha:1] };
+    self.strongAttributes = @{ NSFontAttributeName: [NSFont fontWithName:defaultFontBold size:defaultSize] };
     
     return self;
 }
