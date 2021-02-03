@@ -7,20 +7,10 @@
 //
 
 #import "TSMarkdownParser.h"
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-@implementation UIColor (ts)
-/// code compatibility layer for macOS 10.7 and 10.8
-+ (UIColor *)colorWithSRGBRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-}
-@end
-#else
+
 #import <AppKit/AppKit.h>
-typedef NSColor UIColor;
-typedef NSImage UIImage;
-typedef NSFont UIFont;
-#endif
+
+
 #ifndef NSFoundationVersionNumber10_10_Max
 // macOS 10.11+ test compatible with Xcode 7
 #define NSFoundationVersionNumber10_10_Max 1199
@@ -107,20 +97,10 @@ typedef NSFont UIFont;
     /* bracket parsing */
     
     [defaultParser addImageParsingWithLinkFormattingBlock:^(NSMutableAttributedString *attributedString, NSRange range, NSString * _Nullable link) {
-#if !TARGET_OS_IPHONE
-#if defined(__MAC_10_13)
         // macOS 10.11+ test compatible with Xcode 9+
         // NSTextAttachment works on macOS 10.10 but is tricky for image support
         if (@available(macOS 10.11, iOS 7.0, watchOS 2.0, tvOS 9.0, *)) {
-#else
-        // macOS 10.11+ test compatible with Xcode 8-
-        // NSTextAttachment works on macOS 10.10 but is tricky for image support
-        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10_Max) {
-#endif
-#else
-        {
-#endif
-            UIImage *image = [UIImage imageNamed:link];
+            NSImage *image = [NSImage imageNamed:link];
             if (image) {
                 NSTextAttachment *imageAttachment = [NSTextAttachment new];
                 imageAttachment.image = image;
@@ -132,7 +112,7 @@ typedef NSFont UIFont;
         }
         if (!weakParser.skipLinkAttribute) {
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
-                                                        [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                                                        [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
             if (url.scheme) {
                 [attributedString addAttribute:NSLinkAttributeName
                                          value:url
@@ -145,7 +125,7 @@ typedef NSFont UIFont;
     [defaultParser addLinkParsingWithLinkFormattingBlock:^(NSMutableAttributedString *attributedString, NSRange range, NSString * _Nullable link) {
         if (!weakParser.skipLinkAttribute) {
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
-                                                        [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                                                        [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
             if (url) {
                 [attributedString addAttribute:NSLinkAttributeName
                                          value:url
@@ -175,7 +155,7 @@ typedef NSFont UIFont;
                 return;
             }
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
-                                                        [link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                                                        [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
 
             [attributedString addAttribute:NSLinkAttributeName
                                      value:url
@@ -324,7 +304,7 @@ static NSString *const TSMarkdownEmRegex            = @"(\\*|_)(.+?)(\\1)";
 #else
         {
 #endif
-            UIImage *image = [UIImage imageNamed:imagePath];
+            NSImage *image = [NSImage imageNamed:imagePath];
             if (image) {
                 NSTextAttachment *imageAttachment = [NSTextAttachment new];
                 imageAttachment.image = image;
