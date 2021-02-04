@@ -114,7 +114,7 @@
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
                                                         [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
             if (url.scheme) {
-                [attributedString addAttribute:NSLinkAttributeName
+                [attributedString addAttribute:@"CustomLinkAttributeName"
                                          value:url
                                          range:range];
             }
@@ -127,7 +127,7 @@
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
                                                         [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
             if (url) {
-                [attributedString addAttribute:NSLinkAttributeName
+                [attributedString addAttribute:@"CustomLinkAttributeName"
                                          value:url
                                          range:range];
             }
@@ -140,7 +140,7 @@
     [defaultParser addLinkDetectionWithLinkFormattingBlock:^(NSMutableAttributedString *attributedString, NSRange range, NSString * _Nullable link) {
         if (!weakParser.skipLinkAttribute) {
             __block BOOL alreadyLinked = NO;
-            [attributedString enumerateAttribute:NSLinkAttributeName
+            [attributedString enumerateAttribute:@"CustomLinkAttributeName"
                                          inRange:range
                                          options:0
                                       usingBlock:^(id _Nullable value, __unused NSRange range, BOOL * _Nonnull stop)
@@ -157,7 +157,7 @@
             NSURL *url = [NSURL URLWithString:link] ?: [NSURL URLWithString:
                                                         [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
 
-            [attributedString addAttribute:NSLinkAttributeName
+            [attributedString addAttribute:@"CustomLinkAttributeName"
                                      value:url
                                      range:range];
         }
@@ -362,7 +362,7 @@ static NSString *const TSMarkdownEmRegex            = @"(\\*|_)(.+?)(\\1)";
         [attributedString deleteCharactersInRange:NSMakeRange(linkRange.location - 1, linkRange.length + 2)];
         // formatting link (may alter the length)
         if (url) {
-            [attributedString addAttribute:NSLinkAttributeName
+            [attributedString addAttribute:@"CustomLinkAttributeName"
                                      value:url
                                      range:linkTextRange];
         }
@@ -425,7 +425,7 @@ static NSString *const TSMarkdownEmRegex            = @"(\\*|_)(.+?)(\\1)";
     NSDataDetector *linkDataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     [self addParsingRuleWithRegularExpression:linkDataDetector block:^(NSTextCheckingResult *match, NSMutableAttributedString *attributedString) {
         NSString *linkURLString = [attributedString.string substringWithRange:match.range];
-        [attributedString addAttribute:NSLinkAttributeName
+        [attributedString addAttribute:@"CustomLinkAttributeName"
                                         value:[NSURL URLWithString:linkURLString]
                                         range:match.range];
         formattingBlock(attributedString, match.range);
