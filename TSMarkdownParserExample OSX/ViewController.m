@@ -26,8 +26,12 @@
     
     // Do any additional setup after loading the view.
     
-    self.markdownInput.string = @"# header\n\
-###### header\n\
+    self.markdownInput.string = @"# header 1\n\
+## header 2\n\
+### header 3\n\
+#### header 4\n\
+##### header 5\n\
+###### header 6\n\
 * list, _emphasis_, *emphasis*\n\
 ++ list, __bold__, **bold**\n\
 --- list, `code`, ``code``\n\

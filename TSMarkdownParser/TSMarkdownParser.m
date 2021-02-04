@@ -29,12 +29,12 @@
     
     self.defaultAttributes = @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:defaultSize]};
     
-    self.headerAttributes = @[ @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:76] },
-                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:57] },
-                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:48] },
-                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:40] },
-                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:36] },
-                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:32] } ];
+    self.headerAttributes = @[ @{ NSFontAttributeName: [NSFont fontWithName:defaultFontBold size:35] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:34] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:28] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFont size:24] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFontBold size:20] },
+                                        @{ NSFontAttributeName: [NSFont fontWithName:defaultFontBold size:16] } ];
 
     
     self.emphasisAttributes = @{ NSFontAttributeName: [[NSFontManager sharedFontManager] convertFont:[NSFont fontWithName:defaultFont size:defaultSize] toHaveTrait:NSItalicFontMask] };
@@ -44,13 +44,13 @@
     self.quoteAttributes = @[@{NSFontAttributeName: [NSFont fontWithName:defaultFont size:defaultSize]}];
     
     self.imageAttributes = @{};
-    self.linkAttributes = @{ NSForegroundColorAttributeName: [NSColor redColor],
+    self.linkAttributes = @{ NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0 green:0.624 blue:0.890 alpha:1],
                                       NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle) };
     
     // Courier New and Courier are the only monospace fonts compatible with watchOS 2
     // #69: avoiding crash if font is missing
     self.monospaceAttributes = @{ NSFontAttributeName: [NSFont fontWithName:@"Courier New" size:defaultSize] ?: [NSFont fontWithName:@"Courier" size:defaultSize] ?: [NSFont systemFontOfSize:defaultSize],
-                              NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.95 green:0.54 blue:0.55 alpha:1] };
+                              NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.941 green:0.243 blue:0.278 alpha:1] };
     self.strongAttributes = @{ NSFontAttributeName: [NSFont fontWithName:defaultFontBold size:defaultSize] };
     
     return self;
